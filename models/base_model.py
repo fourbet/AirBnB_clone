@@ -1,26 +1,38 @@
 #!/usr/bin/python3
 """ Defines all common attributes/methods for other classes """
+
 from uuid import uuid4
 from datetime import datetime as dt
-from models import storage
+import models
 
 class BaseModel():
-    """ BaseModel Class """
+    """ BaseModel Class
+
+    Public instance attributes:
+        id (str): assign with an unique random id when created
+        created_at (datetime): assign with the current datetime when created
+        updated_at (datetime): assign with the current datetime when updated
+    """
 
     def __init__(self, *args, **kwargs):
-        """ Constructor of BaseModel """
+        """ Constructor of BaseModel
+
+        Attributes:
+            *args: unused
+            **kwargs (dict)
+        """
 
         if kwargs:
             for k, v in kwargs.items():
-                if k in ("created_at", "updated_at"):
+                if k in ["created_at", "updated_at"]:
                     setattr(self, k, dt.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
-                elif k[0] != '_':
+                elif k != '__class__':
                     setattr(self, k, v)
         else:
             self.id = str(uuid4())
-            self.created_at = dt.utcnow()
-            self.updated_at = dt.utcnow()
-            storage.new(self)
+            self.created_at = dt.now()
+            self.updated_at = dt.now()
+            models.storage.new(self)
 
     def __str__(self):
         """ Print """
@@ -28,8 +40,8 @@ class BaseModel():
 
     def save(self):
         """ Updates the public instance attribute updated_at with the current datetime """
-        self.updated_at = dt.utcnow()
-        storage.save()
+        self.updated_at = dt.now()
+        models.storage.save()
 
     def to_dict(self):
         """ Returns a dictionary containing all keys/values of __dict__ of the instance """
