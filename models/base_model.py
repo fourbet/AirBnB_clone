@@ -2,7 +2,7 @@
 """ Defines all common attributes/methods for other classes """
 from uuid import uuid4
 from datetime import datetime as dt
-
+from models import storage
 
 class BaseModel():
     """ BaseModel Class """
@@ -20,6 +20,7 @@ class BaseModel():
             self.id = str(uuid4())
             self.created_at = dt.utcnow()
             self.updated_at = dt.utcnow()
+            storage.new(self)
 
     def __str__(self):
         """ Print """
@@ -28,6 +29,7 @@ class BaseModel():
     def save(self):
         """ Updates the public instance attribute updated_at with the current datetime """
         self.updated_at = dt.utcnow()
+        storage.save()
 
     def to_dict(self):
         """ Returns a dictionary containing all keys/values of __dict__ of the instance """
