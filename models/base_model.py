@@ -1,17 +1,25 @@
 #!/usr/bin/python3
 """ Defines all common attributes/methods for other classes """
 from uuid import uuid4
-from datetime import datetime
+from datetime import datetime as dt
 
 
 class BaseModel():
     """ BaseModel Class """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """ Constructor of BaseModel """
-        self.id = str(uuid4())
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+
+        if kwargs:
+            for k, v in kwargs.items():
+                if k in ("created_at", "updated_at"):
+                    setattr(self, k, dt.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
+                elif k[0] != '_':
+                    setattr(self, k, v)
+        else:
+            self.id = str(uuid4())
+            self.created_at = dt.utcnow()
+            self.updated_at = dt.utcnow()
 
     def __str__(self):
         """ Print """
@@ -19,7 +27,7 @@ class BaseModel():
 
     def save(self):
         """ Updates the public instance attribute updated_at with the current datetime """
-        self.updated_at = datetime.utcnow()
+        self.updated_at = dt.utcnow()
 
     def to_dict(self):
         """ Returns a dictionary containing all keys/values of __dict__ of the instance """
