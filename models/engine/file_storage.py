@@ -20,15 +20,19 @@ class FileStorage():
 
     def save(self):
         """ save method """
-        my_dict = {k: v.to_dict() for k,v in self.__objects.items()}
-        
+        my_dict = {k: v.to_dict() for k, v in self.__objects.items()}
+
         with open(self.__file_path, mode='w+', encoding='utf-8') as f:
             json.dump(my_dict, f)
 
     def reload(self):
         """ reload method """
+        my_dict = {}
         try:
+            from models.base_model import BaseModel
             with open(self.__file_path) as f:
-                self.__objects = json.load(f)
+                my_dict = json.load(f)
+                for k, v in my_dict.items():
+                    self.__objects[k] = BaseModel(**v)
         except:
             pass
