@@ -5,6 +5,7 @@ Entry point of the command interpreter.
 
 import cmd
 from models.base_model import BaseModel
+from models import storage
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
@@ -24,11 +25,38 @@ class HBNBCommand(cmd.Cmd):
         if not cls:
             return (print("** class name missing **"))
         if cls != 'BaseModel':
-            print("** class doesn't exist **")
+            return (print("** class doesn't exist **"))
 
         new = BaseModel()
         new.save()
         print(new.id)
+
+    def do_show(self, line):
+        """Prints the string representation of an instance"""
+        cmd = line.split()
+        if not cmd:
+            return (print("** class name missing **"))
+        if cmd[0] != 'BaseModel':
+            return (print("** class doesn't exist **"))
+        if len(cmd) == 1:
+            return (print("** instance id missing **"))
+        all_objs = storage.all()
+        search_id = "BaseModel.{}".format(cmd[1])
+        for obj_id in all_objs.keys():
+            if search_id == obj_id:
+                return (print(all_objs[obj_id]))
+        return (print("** no instance found **"))        
+
+    def do_all(self, cls):
+        """Prints all string representation of all instances based
+        or not on the class name"""
+        if cls and cls != "BaseModel":
+            return (print("** class doesn't exist **"))
+        all_objs = storage.all()
+        arr_objs = []
+        for obj_id in all_objs.keys():
+            arr_objs.append(all_objs[obj_id].__str__())
+        print(arr_objs)
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
