@@ -67,16 +67,20 @@ class HBNBCommand(cmd.Cmd):
         cmd = line.split()
         if not cmd:
             return(print("** class name missing **"))
-        elif len(cmd) < 2:
+        if len(cmd) < 2:
             return(print("** instance id missing **"))
         if cmd[0] not in self.classes:
             return(print("** class doesn't exist **"))
-        for k, v in storage.all().items():
-            if cmd[1] == v.id:
-                del storage.all()[k]
-                storage.save()
-                return
-        print("** no instance found **")
+        else:
+            try:
+                k = cmd[0] + '.' + cmd[1]
+                if k in storage.all():
+                    del storage.all()[k]
+                    storage.save()
+                else:
+                    print("** no instance found **")
+            except Exception as e:
+                print("** class doesn't exist **")
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
