@@ -10,6 +10,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
     prompt = "(hbnb) "
+    classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -67,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(cmd) < 2:
             print("** instance id missing **")
             return
-        if cmd[0] not in classes:
+        if cmd[0] != "BaseModel":
             print("** class doesn't exist **")
             return
         for k, v in storage.all().items():
