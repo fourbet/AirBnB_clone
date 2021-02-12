@@ -5,6 +5,7 @@ Entry point of the command interpreter.
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 class HBNBCommand(cmd.Cmd):
@@ -25,10 +26,11 @@ class HBNBCommand(cmd.Cmd):
         """ Creates a new instance of BaseModel"""
         if not cls:
             return (print("** class name missing **"))
-        if cls != 'BaseModel':
+        if cls not in self.classes:
             return (print("** class doesn't exist **"))
 
-        new = BaseModel()
+        instance = globals()[cls]
+        new = instance()
         new.save()
         print(new.id)
 
@@ -37,12 +39,12 @@ class HBNBCommand(cmd.Cmd):
         cmd = line.split()
         if not cmd:
             return (print("** class name missing **"))
-        if cmd[0] != 'BaseModel':
+        if cmd[0] not in self.classes:
             return (print("** class doesn't exist **"))
         if len(cmd) == 1:
             return (print("** instance id missing **"))
         all_objs = storage.all()
-        search_id = "BaseModel.{}".format(cmd[1])
+        search_id = "{}.{}".format(cmd[0], cmd[1])
         for obj_id in all_objs.keys():
             if search_id == obj_id:
                 return (print(all_objs[obj_id]))
@@ -51,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, cls):
         """Prints all string representation of all instances based
         or not on the class name"""
-        if cls and cls != "BaseModel":
+        if cls and cls not in self.classes:
             return (print("** class doesn't exist **"))
         all_objs = storage.all()
         arr_objs = []
@@ -68,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(cmd) < 2:
             print("** instance id missing **")
             return
-        if cmd[0] != "BaseModel":
+        if cmd[0] not in self.classes:
             print("** class doesn't exist **")
             return
         for k, v in storage.all().items():
