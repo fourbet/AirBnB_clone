@@ -45,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
         for obj_id in all_objs.keys():
             if search_id == obj_id:
                 return (print(all_objs[obj_id]))
-        return (print("** no instance found **"))        
+        return (print("** no instance found **"))
 
     def do_all(self, cls):
         """Prints all string representation of all instances based
