@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
         """ Default function, read line """
         line = line.split(".")
         cls = line[0]
-        if len(line) == 2:
+        if len(line) == 2 and cls in self.classes:
             cmd = line[1]
             if cmd == "all()":
                 self.do_all(cls)
