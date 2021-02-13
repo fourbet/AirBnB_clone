@@ -122,5 +122,15 @@ class HBNBCommand(cmd.Cmd):
                 setattr(storage.all()[k], cmd[2], cmd[3])
                 storage.save()
 
+    def default(self, line):
+        """ Default function, read line """
+        line = line.split(".")
+        cls = line[0]
+        if len(line) == 2:
+            cmd = line[1]
+            if cmd == "all()":
+                self.do_all(cls)
+
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
