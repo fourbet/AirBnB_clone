@@ -64,7 +64,12 @@ class HBNBCommand(cmd.Cmd):
         all_objs = storage.all()
         arr_objs = []
         for obj_id in all_objs.keys():
-            arr_objs.append(all_objs[obj_id].__str__())
+            if not cls:
+                arr_objs.append(all_objs[obj_id].__str__())
+            else:
+                search_cls = obj_id.split(".")
+                if search_cls[0] == cls:
+                    arr_objs.append(all_objs[obj_id].__str__())
         print(arr_objs)
 
     def do_destroy(self, line):
