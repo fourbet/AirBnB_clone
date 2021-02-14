@@ -147,8 +147,8 @@ class HBNBCommand(cmd.Cmd):
                     "destroy": self.do_destroy,
                     "update": self.do_update}
 
-        line = (line.replace("(", ".").replace(")", ".")
-                    .replace('"', "").replace(",", ""))
+        line = (line.replace("(", ".").replace(")", ".").replace('"', "")
+                .replace(",", ".").replace(' ', ""))
 
         if '.' in line:
             cmd = line.split(".")
@@ -158,12 +158,20 @@ class HBNBCommand(cmd.Cmd):
             if method_name in ["all"]:
                 return(fct(class_name))
             if method_name in ["destroy", "show"]:
-                if len(cmd) == 3:
+                if len(cmd) == 4:
                     id_name = cmd[2]
                     args = class_name + " " + id_name
                     return(fct(args))
                 else:
                     return(print(self.errors["IdMissing"]))
+            if method_name in ["update"]:
+                if len(cmd) == 6:
+                    id_name = cmd[2]
+                    attr_name = cmd[3]
+                    val = cmd[4]
+                    args = class_name + " " + id_name + " " +\
+                    attr_name + " " +  val
+                    return(fct(args))
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
