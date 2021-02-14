@@ -137,10 +137,13 @@ class HBNBCommand(cmd.Cmd):
         <class name>.update(<id>, <attribute name>, <attribute value>)
         <class name>.update(<id>, <dictionary representation)
         """
-        commands = {"all()": self.do_all,
-                    "show()": self.do_show,
-                    "destroy()": self.do_destroy,
-                    "update()": self.do_update}
+        commands = {"all": self.do_all,
+                    "show": self.do_show,
+                    "destroy": self.do_destroy,
+                    "update": self.do_update}
+
+        line = (line.replace("(", ".").replace(")", ".")
+                    .replace('"', "").replace(",", ""))
 
         if '.' in line:
             cmd = line.split(".")
