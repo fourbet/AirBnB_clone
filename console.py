@@ -68,11 +68,16 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances based
         or not on the class name"""
         if cls and cls not in self.classes:
-            return (print(self.errors["ClassUnknown"]))
+            return (print("** class doesn't exist **"))
         all_objs = storage.all()
         arr_objs = []
         for obj_id in all_objs.keys():
-            arr_objs.append(all_objs[obj_id].__str__())
+            if not cls:
+                arr_objs.append(all_objs[obj_id].__str__())
+            else:
+                search_cls = obj_id.split(".")
+                if search_cls[0] == cls:
+                    arr_objs.append(all_objs[obj_id].__str__())
         print(arr_objs)
 
     def do_destroy(self, line):
@@ -149,8 +154,14 @@ class HBNBCommand(cmd.Cmd):
             cmd = line.split(".")
             class_name = cmd[0]
             method_name = cmd[1]
-            if class_name in self.classes and method_name in commands.keys():
-                commands[method_name](class_name)
+            if class_name in self.classes:
+                fct = commands[method_name]
+                if method_name in ["all"]:
+                    return(fct(class_name))
+                if method_name in ["destroy", "show"]:
+                    id_name = cmd[2]
+                    args = class_name + " " + id_name
+                    return(fct(args))
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
