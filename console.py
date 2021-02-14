@@ -18,6 +18,14 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     classes = ["BaseModel", "User", "State", "City", "Amenity",
                "Place", "Review"]
+    errors = {
+        "ClassMissing": "** class name missing **",
+        "ClassUnknown": "** class doesn't exist **",
+        "IdMissing": "** instance id missing **",
+        "IdUnknown": "** no instance found **",
+        "AttrMissing": "** attribute name missing **",
+        "ValueMissing": "** value missing **"
+    }
 
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -31,9 +39,9 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, cls):
         """ Creates a new instance of BaseModel"""
         if not cls:
-            return (print("** class name missing **"))
+            return (print(self.errors["ClassMissing"]))
         if cls not in self.classes:
-            return (print("** class doesn't exist **"))
+            return (print(self.errors["ClassUnknown"]))
 
         instance = globals()[cls]
         new = instance()
@@ -44,17 +52,17 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an instance"""
         cmd = line.split()
         if not cmd:
-            return (print("** class name missing **"))
+            return (print(self.errors["ClassMissing"]))
         if cmd[0] not in self.classes:
-            return (print("** class doesn't exist **"))
+            return (print(self.errors["ClassUnknown"]))
         if len(cmd) == 1:
-            return (print("** instance id missing **"))
+            return (print(self.errors["IdMissing"]))
         all_objs = storage.all()
         search_id = "{}.{}".format(cmd[0], cmd[1])
         for obj_id in all_objs.keys():
             if search_id == obj_id:
                 return (print(all_objs[obj_id]))
-        return (print("** no instance found **"))
+        return (print(self.errors["IdUnknown"]))
 
     def do_all(self, cls):
         """Prints all string representation of all instances based
@@ -76,11 +84,11 @@ class HBNBCommand(cmd.Cmd):
         "Deletes an instance based on class name or id"
         cmd = line.split()
         if not cmd:
-            return(print("** class name missing **"))
+            return(print(self.errors["ClassMissing"]))
         if len(cmd) < 2:
-            return(print("** instance id missing **"))
+            return(print(self.errors["IdMissing"]))
         if cmd[0] not in self.classes:
-            return(print("** class doesn't exist **"))
+            return(print(self.errors["ClassUnknown"]))
         else:
             try:
                 k = cmd[0] + '.' + cmd[1]
@@ -88,26 +96,26 @@ class HBNBCommand(cmd.Cmd):
                     del storage.all()[k]
                     storage.save()
                 else:
-                    print("** no instance found **")
+                    print(self.errors["IdUnknown"])
             except Exception as e:
-                print("** class doesn't exist **")
+                print(self.errors["ClassUnknown"])
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
         cmd = line.split()
         if not cmd:
-            return(print("** class name missing **"))
+            return(print(self.errors["ClassMissing"]))
         if cmd[0] not in self.classes:
-            return(print("** class doesn't exist **"))
+            return(print(self.errors["ClassUnknown"]))
         if len(cmd) == 1:
-            return(print("** instance id missing **"))
+            return(print(self.errors["IdMissing"]))
         k = cmd[0] + "." + cmd[1]
         if k not in storage.all().keys():
-            return(print("** no instance found **"))
+            return(print(self.errors["IdUnknown"]))
         if len(cmd) == 2:
-            print("** attribute name missing **")
+            print(self.errors["AttrMissing"])
         elif len(cmd) == 3:
-            print("** value missing **")
+            print(self.errors["ValueMissing"])
         else:
             k = cmd[0] + '.' + cmd[1]
             val = cmd[3]
@@ -122,15 +130,42 @@ class HBNBCommand(cmd.Cmd):
                 setattr(storage.all()[k], cmd[2], cmd[3])
                 storage.save()
 
-    def default(self, line):
-        """ Default function, read line """
-        line = line.split(".")
-        cls = line[0]
-        if len(line) == 2 and cls in self.classes:
-            cmd = line[1]
-            if cmd == "all()":
-                self.do_all(cls)
 
+    def emptyline(self):
+        """empty line"""
+        pass
+
+    def default(self, line):
+        """Method to take care of following commands:
+        <class name>.all()
+        <class name>.show(<id>)
+        <class name>.destroy(<id>)
+        <class name>.update(<id>, <attribute name>, <attribute value>)
+        <class name>.update(<id>, <dictionary representation)
+        """
+        commands = {"all": self.do_all,
+                    "show": self.do_show,
+                    "destroy": self.do_destroy,
+                    "update": self.do_update}
+
+        line = (line.replace("(", ".").replace(")", ".")
+                    .replace('"', "").replace(",", ""))
+
+        if '.' in line:
+            cmd = line.split(".")
+            class_name = cmd[0]
+            method_name = cmd[1]
+            fct = commands[method_name]
+            if method_name in ["all"]:
+                return(fct(class_name))
+            if method_name in ["destroy", "show"]:
+                if len(cmd) == 3:
+                    id_name = cmd[2]
+                    args = class_name + " " + id_name
+                    return(fct(args))
+                else:
+                    return(print(self.errors["IdMissing"]))
+>>>>>>> origin/master
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
