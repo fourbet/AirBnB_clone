@@ -154,14 +154,16 @@ class HBNBCommand(cmd.Cmd):
             cmd = line.split(".")
             class_name = cmd[0]
             method_name = cmd[1]
-            if class_name in self.classes:
-                fct = commands[method_name]
-                if method_name in ["all"]:
-                    return(fct(class_name))
-                if method_name in ["destroy", "show"]:
+            fct = commands[method_name]
+            if method_name in ["all"]:
+                return(fct(class_name))
+            if method_name in ["destroy", "show"]:
+                if len(cmd) == 3:
                     id_name = cmd[2]
                     args = class_name + " " + id_name
                     return(fct(args))
+                else:
+                    return(print(self.errors["IdMissing"]))
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
