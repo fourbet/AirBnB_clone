@@ -130,6 +130,17 @@ class HBNBCommand(cmd.Cmd):
                 setattr(storage.all()[k], cmd[2], cmd[3])
                 storage.save()
 
+    def do_count(self, cls):
+        """Retrieve the number of instances of a class"""
+        if cls and cls not in self.classes:
+            return(print(self.errors["ClassUnknown"]))
+        count = 0
+        all_objs = storage.all()
+        for obj_id in all_objs.keys():
+            search_cls = obj_id.split(".")
+            if search_cls[0] == cls:
+                count += 1
+        print(count)
 
     def emptyline(self):
         """empty line"""
@@ -146,7 +157,8 @@ class HBNBCommand(cmd.Cmd):
         commands = {"all": self.do_all,
                     "show": self.do_show,
                     "destroy": self.do_destroy,
-                    "update": self.do_update}
+                    "update": self.do_update,
+                    "count": self.do_count}
 
         line = (line.replace("(", ".").replace(")", ".")
                     .replace('"', "").replace(",", ""))
@@ -156,7 +168,7 @@ class HBNBCommand(cmd.Cmd):
             class_name = cmd[0]
             method_name = cmd[1]
             fct = commands[method_name]
-            if method_name in ["all"]:
+            if method_name in ["all", "count"]:
                 return(fct(class_name))
             if method_name in ["destroy", "show"]:
                 if len(cmd) == 3:
@@ -165,7 +177,6 @@ class HBNBCommand(cmd.Cmd):
                     return(fct(args))
                 else:
                     return(print(self.errors["IdMissing"]))
->>>>>>> origin/master
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
