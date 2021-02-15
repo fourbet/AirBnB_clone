@@ -4,5 +4,4 @@
 !*.*
 # Ignore ~ files
 *~
-*.pyc
 *.json
