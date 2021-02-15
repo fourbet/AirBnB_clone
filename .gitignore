@@ -2,7 +2,7 @@
 *
 # Unignore all with extensions
 !*.*
-!/tests
+!/tests/*
 # Ignore ~ files
 *~
 *.pyc
