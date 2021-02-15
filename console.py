@@ -11,7 +11,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models import storage
-
+import json
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
@@ -147,31 +147,41 @@ class HBNBCommand(cmd.Cmd):
                     "destroy": self.do_destroy,
                     "update": self.do_update}
 
-        line = (line.replace("(", ".").replace(")", ".").replace('"', "")
-                .replace(",", ".").replace(' ', ""))
+        line = (line.replace("(", "").replace(")", ""))
 
         if '.' in line:
             cmd = line.split(".")
             class_name = cmd[0]
-            method_name = cmd[1]
+            a = cmd[1].split('"')
+            method_name = a[0]
             fct = commands[method_name]
             if method_name in ["all"]:
                 return(fct(class_name))
+            id_name = a[1]
             if method_name in ["destroy", "show"]:
-                if len(cmd) == 4:
-                    id_name = cmd[2]
+                if len(cmd) == 2:
                     args = class_name + " " + id_name
                     return(fct(args))
                 else:
                     return(print(self.errors["IdMissing"]))
             if method_name in ["update"]:
-                if len(cmd) == 6:
-                    id_name = cmd[2]
-                    attr_name = cmd[3]
-                    val = cmd[4]
+                if '{' not in cmd[1]:
+                    param = cmd[1].split(',')
+                    attr_name = param[1].replace('"', "")
+                    attr_val = param[2].replace('"', "").replace(' ', "")
                     args = class_name + " " + id_name + " " +\
-                    attr_name + " " +  val
+                    attr_name + " " +  attr_val
                     return(fct(args))
+                else:
+                    param = cmd[1].split(",", 1)
+                    my_attr = json.loads(param[1])
+                    for k, v in my_attr.items():
+                        attr_name = k
+                        attr_val = str(v)
+                        args = class_name + " " + id_name + " " +\
+                               attr_name + " " +  attr_val
+                        fct(args)
+                    return
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
