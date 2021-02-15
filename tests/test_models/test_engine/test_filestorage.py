@@ -20,8 +20,7 @@ class FileStorage_Test(unittest.TestCase):
 
     def tearDown(self):
         """Tear down"""
-        if os.path.exists("file.json"):
-            os.rename("file.json", "foo")
+        pass
 
     def test_00_private_attrs(self):
         """Validate attributes are private."""
@@ -58,13 +57,22 @@ class FileStorage_Test(unittest.TestCase):
         self.assertEqual(type(b.id), str)
 
     def test_03_save(self):
-        """Tests the save method of File Storage class"""
+        """Tests the save method"""
         fs = FileStorage()
-        b1 = BaseModel()
-        fs.new(b1)
-        self.assertFalse(os.path.exists("file.json"))
+        b = BaseModel()
+        fs.new(b)
         fs.save()
         self.assertTrue(os.path.exists("file.json"))
+
+    def test_04_reload(self):
+        """Test the reload method."""
+        fs = FileStorage()
+        b = BaseModel()
+        key = "BaseModel" + '.' + b.id
+        fs.new(b)
+        fs.save()
+        fs.reload()
+        self.assertTrue(fs.all()[key])
 
 
 if __name__ == '__main__':
