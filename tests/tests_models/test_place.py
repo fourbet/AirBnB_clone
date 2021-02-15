@@ -12,6 +12,7 @@ class TestPlace(unittest.TestCase):
     """ Unit tests Place Class """
 
     def setUp(self):
+        """ Initialization """
         self.city = City()
         self.user = User()
         self.amenity = Amenity()
@@ -30,16 +31,19 @@ class TestPlace(unittest.TestCase):
         self.place_2 = Place()
 
     def test_attr_base(self):
+        """ Test attribut BaseModel """
         self.assertIsNotNone(self.place_1.id)
         self.assertIsNotNone(self.place_1.created_at)
         self.assertIsNotNone(self.place_1.updated_at)
 
     def test_type_attr_base(self):
+        """ Test type attribut BaseModel """
         self.assertEqual(type(self.place_1.id), str)
         self.assertEqual(type(self.place_1.created_at), datetime)
         self.assertEqual(type(self.place_1.updated_at), datetime)
 
     def test_attr(self):
+        """ Test attribut Place class """
         self.assertEqual(self.place_1.name, "Hostel")
         self.assertEqual(self.place_1.description, "Four stars")
         self.assertEqual(self.place_1.city_id, self.city.id)
@@ -52,6 +56,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place_1.longitude, 145.36)
 
     def test_no_arg(self):
+        """ Test Place class with no attribut """
         self.assertEqual(self.place_2.name, "")
         self.assertEqual(self.place_2.description, "")
         self.assertEqual(self.place_2.city_id, "")
@@ -65,6 +70,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place_2.amenity_ids, [])
 
     def test_type_args(self):
+        """ Test type attribut Place """
         self.assertEqual(type(self.place_2.name), str)
         self.assertEqual(type(self.place_2.description), str)
         self.assertEqual(type(self.place_2.number_rooms), int)
