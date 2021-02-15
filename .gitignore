@@ -2,6 +2,8 @@
 *
 # Unignore all with extensions
 !*.*
+!/tests
 # Ignore ~ files
 *~
+*.pyc
 *.json
