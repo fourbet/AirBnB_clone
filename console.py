@@ -178,7 +178,8 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     return(print(self.errors["IdMissing"]))
             if method_name in ["update"]:
-                if '{' not in cmd[1]:
+                param = cmd[1].split(",", 1)
+                if not isinstance(param[1], dict):
                     param = cmd[1].split(',')
                     attr_name = param[1].replace('"', "")
                     attr_val = param[2].replace('"', "").replace(' ', "")
@@ -186,7 +187,6 @@ class HBNBCommand(cmd.Cmd):
                     attr_name + " " +  attr_val
                     return(fct(args))
                 else:
-                    param = cmd[1].split(",", 1)
                     my_attr = json.loads(param[1])
                     for k, v in my_attr.items():
                         attr_name = k
