@@ -41,6 +41,6 @@ class TestUser(unittest.TestCase):
     def test_type_args(self):
         self.assertEqual(type(self.user_1.first_name), str)
         self.assertEqual(type(self.user_2.first_name), str)
-        
 
-    
+if __name__ == '__main__':
+    unittest.main()
