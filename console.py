@@ -13,6 +13,7 @@ from models.review import Review
 from models import storage
 import json
 
+
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
     prompt = "(hbnb) "
@@ -24,7 +25,8 @@ class HBNBCommand(cmd.Cmd):
         "IdMissing": "** instance id missing **",
         "IdUnknown": "** no instance found **",
         "AttrMissing": "** attribute name missing **",
-        "ValueMissing": "** value missing **"
+        "ValueMissing": "** value missing **",
+        "MethodUnknown": "** method unknown **"
     }
 
     def do_quit(self, line):
@@ -155,7 +157,7 @@ class HBNBCommand(cmd.Cmd):
         <class name>.update(<id>, <dictionary representation)
         """
         commands = {"all": self.do_all,
-                   "show": self.do_show,
+                    "show": self.do_show,
                     "destroy": self.do_destroy,
                     "update": self.do_update,
                     "count": self.do_count}
@@ -167,7 +169,10 @@ class HBNBCommand(cmd.Cmd):
             class_name = cmd[0]
             a = cmd[1].split('"')
             method_name = a[0]
-            fct = commands[method_name]
+            if method_name in commands:
+                fct = commands[method_name]
+            else:
+                return (print(self.errors["MethodUnknown"]))
             if method_name in ["all", "count"]:
                 return(fct(class_name))
             id_name = a[1]
@@ -178,21 +183,21 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     return(print(self.errors["IdMissing"]))
             if method_name in ["update"]:
-                if '{' not in cmd[1]:
+                param = cmd[1].split(",", 1)
+                if not isinstance(eval(param[1]), dict):
                     param = cmd[1].split(',')
                     attr_name = param[1].replace('"', "")
                     attr_val = param[2].replace('"', "").replace(' ', "")
-                    args = class_name + " " + id_name + " " +\
-                    attr_name + " " +  attr_val
+                    args = class_name + " " + id_name + " "\
+                        + attr_name + " " + attr_val
                     return(fct(args))
                 else:
-                    param = cmd[1].split(",", 1)
                     my_attr = json.loads(param[1])
                     for k, v in my_attr.items():
                         attr_name = k
                         attr_val = str(v)
-                        args = class_name + " " + id_name + " " +\
-                               attr_name + " " +  attr_val
+                        args = class_name + " " + id_name + " "\
+                            + attr_name + " " + attr_val
                         fct(args)
                     return
 
