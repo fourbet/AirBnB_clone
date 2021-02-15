@@ -2,6 +2,7 @@
 """ Unit tests User class """
 from models.user import User
 import unittest
+from datetime import datetime
 
 
 class TestUser(unittest.TestCase):
@@ -19,6 +20,11 @@ class TestUser(unittest.TestCase):
         self.assertIsNotNone(self.user_1.id)
         self.assertIsNotNone(self.user_1.created_at)
         self.assertIsNotNone(self.user_1.updated_at)
+
+    def test_type_attr_base(self):
+        self.assertEqual(type(self.user_1.id), str)
+        self.assertEqual(type(self.user_1.created_at), datetime)
+        self.assertEqual(type(self.user_1.updated_at), datetime)
 
     def test_attr(self):
         self.assertEqual(self.user_1.first_name, "Max")
