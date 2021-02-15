@@ -48,6 +48,18 @@ class HBNBCommand(cmd.Cmd):
         new.save()
         print(new.id)
 
+    def do_count(self, cls):
+        """Retrieve the number of instances of a class"""
+        if cls and cls not in self.classes:
+            return(print(self.errors["ClassUnknown"]))
+        count = 0
+        all_objs = storage.all()
+        for obj_id in all_objs.keys():
+            search_cls = obj_id.split(".")
+            if search_cls[0] == cls:
+                count += 1
+        print(count)
+
     def do_show(self, line):
         """Prints the string representation of an instance"""
         cmd = line.split()
@@ -130,18 +142,6 @@ class HBNBCommand(cmd.Cmd):
                 setattr(storage.all()[k], cmd[2], cmd[3])
                 storage.save()
 
-    def do_count(self, cls):
-        """Retrieve the number of instances of a class"""
-        if cls and cls not in self.classes:
-            return(print(self.errors["ClassUnknown"]))
-        count = 0
-        all_objs = storage.all()
-        for obj_id in all_objs.keys():
-            search_cls = obj_id.split(".")
-            if search_cls[0] == cls:
-                count += 1
-        print(count)
-
     def emptyline(self):
         """empty line"""
         pass
@@ -155,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
         <class name>.update(<id>, <dictionary representation)
         """
         commands = {"all": self.do_all,
-                    "show": self.do_show,
+                   "show": self.do_show,
                     "destroy": self.do_destroy,
                     "update": self.do_update,
                     "count": self.do_count}
