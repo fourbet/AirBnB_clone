@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 The prototype for Review class.
 """
