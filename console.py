@@ -191,16 +191,16 @@ class HBNBCommand(cmd.Cmd):
                 param = cmd[1].split(',')
                 attr_name = param[1].replace('"', "")
                 attr_val = param[2].replace('"', "").replace(' ', "")
-                args = class_name + " " + id_name + " "\
-                       + attr_name + " " + attr_val
+                args = class_name + " " + id_name + " "
+                + attr_name + " " + attr_val
                 return(fct(args))
             else:
                 my_attr = json.loads(param[1])
                 for k, v in my_attr.items():
                     attr_name = k
                     attr_val = str(v)
-                    args = class_name + " " + id_name + " "\
-                           + attr_name + " " + attr_val
+                    args = class_name + " " + id_name + " "
+                    + attr_name + " " + attr_val
                     fct(args)
                 return
 
