@@ -81,19 +81,25 @@ class FileStorage_Test(unittest.TestCase):
         fs = FileStorage()
         fs.__file_path = "file2.json"
 
-    def test_new(self):
-        """Tests the new function"""
+    def test_attr_all(self):
+        """Tests all function should return dict"""
         s1 = FileStorage()
-        s1._FileStorage__objects = {}
-        d1 = {}
+        d1 = s1.all()
+        self.assertEqual(type(d1), dict)
+        self.assertIs(d1, s1._FileStorage__objects)
+
+    def test_save_reload(self):
+        """Tests the save and reload functions"""
+        if os.path.isfile('file.json'):
+            os.rename("file.json", "file.jsonSAVE")
         m1 = BaseModel()
-        s1.new(m1)
-        m2 = User()
-        s1.new(m2)
-        d1["BaseModel." + m1.id] = m1
-        d1["User." + m2.id] = m2
-        t1 = s1.all()
-        self.assertDictEqual(t1, d1)
+        m1.save()
+        storage.reload()
+        ld = storage.all()
+        self.assertDictEqual(ld["BaseModel." + m1.id].to_dict(), m1.to_dict())
+        os.remove("file.json")
+        if os.path.isfile('file.jsonSAVE'):
+            os.rename("file.jsonSAVE", "file.json")
 
 if __name__ == '__main__':
     unittest.main()
