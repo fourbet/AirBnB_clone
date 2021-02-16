@@ -8,7 +8,6 @@ import unittest
 import os
 from models import storage
 from models.base_model import BaseModel
-from models.user import User
 from models.engine.file_storage import FileStorage
 
 
@@ -75,18 +74,6 @@ class FileStorage_Test(unittest.TestCase):
         fs.reload()
         self.assertTrue(fs.all()[key])
         fs.all()
-
-    def test_05_attributs(self):
-        """Test attributs"""
-        fs = FileStorage()
-        fs.__file_path = "file2.json"
-        b = BaseModel()
-        b.save()
-        fs.reload()
-        my_dict = storage.all()
-        self.assertDictEqual(my_dict["BaseModel." + b.id].to_dict(), b.to_dict())
-        if os.path.isfile('file2.json'):
-            b.save()
 
 
 if __name__ == '__main__':
