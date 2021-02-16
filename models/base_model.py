@@ -28,7 +28,7 @@ class BaseModel():
                 if k in ["created_at", "updated_at"]:
                     setattr(self, k, dt.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
                 elif k != '__class__':
-                    setattr(self, k, v)
+                    setattr(self, k, str(v))
         else:
             self.id = str(uuid4())
             self.created_at = dt.now()
