@@ -38,17 +38,6 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.rev_1.place_id, self.place.id)
         self.assertEqual(self.rev_1.user_id, self.user.id)
 
-    def test_Review_attributes(self):
-        """Test that Review class has place_id, user_id and text
-            attributes."""
-        rev = Review()
-        place_id = getattr(rev, "place_id")
-        user_id = getattr(rev, "user_id")
-        text = getattr(rev, "text")
-        self.assertIsInstance(place_id, str)
-        self.assertIsInstance(user_id, str)
-        self.assertIsInstance(text, str)
-
     def test_no_arg(self):
         """ Test Review class with no attribut """
         self.assertEqual(self.rev_2.name, "")
