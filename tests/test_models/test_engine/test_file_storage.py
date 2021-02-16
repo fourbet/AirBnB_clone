@@ -95,5 +95,24 @@ class FileStorage_Test(unittest.TestCase):
         if os.path.isfile('file.jsonSAVE'):
             os.rename("file.jsonSAVE", "file.json")
 
+    def test_all_returns_dict(self):
+        """Test that all returns the FileStorage.__objects attr"""
+        storage = FileStorage()
+        new_dict = storage.all()
+        self.assertEqual(type(new_dict), dict)
+        self.assertIs(new_dict, storage._FileStorage__objects)
+
+    def test_save_and_load(self):
+        os.remove("file.json")
+        with self.assertRaises(Exception):
+            with open("file.json", "r") as f:
+                self.assertEqual(0, len(f.read()))
+        my_model = BaseModel()
+        my_model.name = "Holberton"
+        my_model.my_number = 89
+        my_model.save()
+        with open("file.json", "r") as f:
+            self.assertNotEqual(0, len(f.read()))
+
 if __name__ == '__main__':
     unittest.main()
