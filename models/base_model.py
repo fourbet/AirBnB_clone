@@ -57,3 +57,9 @@ class BaseModel():
         my_dict["updated_at"] = self.updated_at.isoformat()
         my_dict["__class__"] = self.__class__.__name__
         return my_dict
+
+    def test_07_str_save(self):
+        """ Test methods str and save """
+        b = BaseModel()
+        string = "[BaseModel] ({}) {}".format(b.id, b.__dict__)
+        self.assertEqual(string, str(b))
