@@ -41,9 +41,10 @@ class TestReview(unittest.TestCase):
     def test_Review_attributes(self):
         """Test that Review class has place_id, user_id and text
             attributes."""
-        place_id = getattr(self.rev_1, "place_id")
-        user_id = getattr(self.rev_1, "user_id")
-        text = getattr(self.rev_1, "text")
+        rev = Review()
+        place_id = getattr(rev, "place_id")
+        user_id = getattr(rev, "user_id")
+        text = getattr(rev, "text")
         self.assertIsInstance(place_id, str)
         self.assertIsInstance(user_id, str)
         self.assertIsInstance(text, str)
