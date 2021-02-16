@@ -4,7 +4,7 @@ from models.review import Review
 from models.user import User
 from models.place import Place
 import unittest
-from datetime import datetime as dt
+from datetime import datetime
 
 
 class TestReview(unittest.TestCase):
@@ -29,8 +29,8 @@ class TestReview(unittest.TestCase):
     def test_type_attr_base(self):
         """ Test type attribut BaseModel """
         self.assertEqual(type(self.rev_1.id), str)
-        self.assertEqual(type(self.rev_1.created_at), dt)
-        self.assertEqual(type(self.rev_1.updated_at), dt)
+        self.assertEqual(type(self.rev_1.created_at), datetime)
+        self.assertEqual(type(self.rev_1.updated_at), datetime)
 
     def test_attr(self):
         """ Test attribut Review class """
