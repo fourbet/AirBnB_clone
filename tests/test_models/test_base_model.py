@@ -17,7 +17,7 @@ class TestBaseModel(unittest.TestCase):
 
     def setUp(self):
         """Set up"""
-        pass
+        self.base1 = BaseModel()
 
     def tearDown(self):
         """Tears down"""
@@ -76,6 +76,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(b, "created_at"))
         self.assertTrue(hasattr(b, "updated_at"))
         self.assertTrue(hasattr(b, "name"))
+
+    def test_06_attr_not_none(self):
+        """ Test attribut BaseModel """
+        self.assertIsNotNone(self.base1.id)
+        self.assertIsNotNone(self.base1.created_at)
+        self.assertIsNotNone(self.base1.updated_at)
 
 
 if __name__ == '__main__':
