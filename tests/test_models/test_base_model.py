@@ -45,8 +45,8 @@ class TestBaseModel(unittest.TestCase):
     def test_03_adding_extra_parameters(self):
         """Test for manually adding parameters"""
         b = BaseModel()
-        b.first_name = "John"
-        b.age = 89
+        b.first_name = "Ophelie"
+        b.age = 24
         self.assertTrue(hasattr(b, "first_name"))
         self.assertTrue(hasattr(b, "age"))
         self.assertEqual(type(b.first_name), str)
@@ -55,8 +55,8 @@ class TestBaseModel(unittest.TestCase):
     def test_04_to_dict(self):
         """Test to validate to_dict"""
         b = BaseModel()
-        b.first_name = "John"
-        b.age = 89
+        b.first_name = "Huy"
+        b.age = 18
         d = b.to_dict()
         self.assertTrue('first_name' in d)
         self.assertTrue('age' in d)
