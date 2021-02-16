@@ -46,5 +46,16 @@ class TestReview(unittest.TestCase):
         """ Test type attribut Review """
         self.assertEqual(type(self.rev_2.name), str)
 
+    def test_Review_attributes(self):
+        """Test that Review class has place_id, user_id and text
+            attributes."""
+        rev = Review()
+        place_id = getattr(rev, "place_id")
+        user_id = getattr(rev, "user_id")
+        text = getattr(rev, "text")
+        self.assertIsInstance(place_id, str)
+        self.assertIsInstance(user_id, str)
+        self.assertIsInstance(text, str)
+
 if __name__ == '__main__':
     unittest.main()
