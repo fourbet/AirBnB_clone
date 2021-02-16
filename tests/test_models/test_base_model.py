@@ -87,7 +87,13 @@ class TestBaseModel(unittest.TestCase):
         """ test methods save and str"""
         string = "[BaseModel] ({}) {}".format(self.base1.id, self.base1.__dict__)
         self.assertEqual(string, self.base1.__str__())
+        old_created_at = self.base1.created_at
+        old_updated_at = self.base1.updated_at
         self.base1.save()
+        new_created_at = self.base1.created_at
+        new_updated_at = self.base1.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+        self.assertEqual(old_created_at, new_created_at)
 
 if __name__ == '__main__':
     unittest.main()
