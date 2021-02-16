@@ -37,11 +37,6 @@ class Console_Test(unittest.TestCase):
             self.assertTrue(HBNBCommand().onecmd("EOF"))
 
     def test_02_show(self):
-        b = BaseModel()
-        b_id = b.id
-        with patch("sys.stdout", new=StringIO()) as f:
-            HBNBCommand().onecmd("BaseModel.show(" + b_id + ")")
-            self.assertIn('BaseModel', f.getvalue())
 
         s = State()
         s_id = s.id
