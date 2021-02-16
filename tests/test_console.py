@@ -35,8 +35,8 @@ class Console_Test(unittest.TestCase):
         """Test EOF"""
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertTrue(HBNBCommand().onecmd("EOF"))
-
-    def test_06_show(self):
+"""
+    def test_02_show(self):
         """Test show"""
         b = BaseModel()
         b_id = b.id
@@ -79,6 +79,6 @@ class Console_Test(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("Place.show(" + p_id + ")")
             self.assertIn('Place', f.getvalue())
-
+"""
 if __name__ == '__main__':
     unittest.main()
