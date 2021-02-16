@@ -8,6 +8,7 @@ import unittest
 import os
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 
 
@@ -80,6 +81,19 @@ class FileStorage_Test(unittest.TestCase):
         fs = FileStorage()
         fs.__file_path = "file2.json"
 
+    def test_new(self):
+        """Tests the new function"""
+        s1 = FileStorage()
+        s1._FileStorage__objects = {}
+        d1 = {}
+        m1 = BaseModel()
+        s1.new(m1)
+        m2 = User()
+        s1.new(m2)
+        d1["BaseModel." + m1.id] = m1
+        d1["User." + m2.id] = m2
+        t1 = s1.all()
+        self.assertDictEqual(t1, d1)
 
 if __name__ == '__main__':
     unittest.main()
