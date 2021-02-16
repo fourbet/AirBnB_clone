@@ -25,14 +25,14 @@ class BaseModel():
 
         if kwargs:
             for k, v in kwargs.items():
-                if k in ["created_at", "updated_at"]:
+                if k in ["created_at", "updated_at"] and type(v) is str:
                     setattr(self, k, dt.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
                 elif k != '__class__':
                     setattr(self, k, str(v))
         else:
             self.id = str(uuid4())
             self.created_at = dt.now()
-            self.updated_at = dt.now()
+            self.updated_at = self.created_at
             models.storage.new(self)
 
     def __str__(self):
