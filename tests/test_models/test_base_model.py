@@ -87,6 +87,7 @@ class TestBaseModel(unittest.TestCase):
         """ test methods save and str"""
         string = "[BaseModel] ({}) {}".format(self.base1.id, self.base1.__dict__)
         self.assertEqual(string, self.base1.__str__())
+        self.base1.save()
 
 if __name__ == '__main__':
     unittest.main()
