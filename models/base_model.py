@@ -63,3 +63,4 @@ class BaseModel():
         b = BaseModel()
         string = "[BaseModel] ({}) {}".format(b.id, b.__dict__)
         self.assertEqual(string, b.__str__())
+        b.save()
