@@ -26,12 +26,10 @@ class BaseModel():
 
         if kwargs:
             for k, v in kwargs.items():
-                if k != '__class__':
+                if k in ["created_at", "updated_at"]:
+                    setattr(self, k, dt.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
+                elif k != '__class__':
                     setattr(self, k, v)
-                if hasattr(self, "created_at") and type(self.created_at) is str:
-                    self.created_at = dt.strptime(kwargs["created_at"], fmt)
-                if hasattr(self, "updated_at") and type(self.updated_at) is str:
-                    self.updated_at = self.created_at
         else:
             self.id = str(uuid4())
             self.created_at = dt.now()
@@ -40,8 +38,8 @@ class BaseModel():
 
     def __str__(self):
         """ Print """
-        return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+        return "[{:s}] ({:s}) {}".format(
+            self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """ Updates the public instance attribute updated_at
@@ -57,5 +55,5 @@ class BaseModel():
         my_dict = dict(self.__dict__)
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
-        my_dict["__class__"] = type(self).__name__
+        my_dict["__class__"] = self.__class__.__name__
         return my_dict
