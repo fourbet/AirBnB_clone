@@ -83,7 +83,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNotNone(self.base1.created_at)
         self.assertIsNotNone(self.base1.updated_at)
 
-
+    def test_07_str_save(self):
+        """ test methods save and str"""
+        string = "[BaseModel] ({}) {}".format(self.base1.id, self.base1.__dict__)
+        self.assertEqual(string, self.base1.__str__())
 
 if __name__ == '__main__':
     unittest.main()
