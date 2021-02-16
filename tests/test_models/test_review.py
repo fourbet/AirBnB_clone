@@ -46,5 +46,6 @@ class TestReview(unittest.TestCase):
         """ Test type attribut Review """
         self.assertEqual(type(self.rev_2.name), str)
 
+
 if __name__ == '__main__':
     unittest.main()
