@@ -21,17 +21,6 @@ class TestReview(unittest.TestCase):
         self.rev_1.text = "Nice"
         self.rev_2 = Place()
 
-    def test_Review_attributes(self):
-        """Test that Review class has place_id, user_id and text
-            attributes."""
-        new_review = Review()
-        place_id = getattr(new_review, "place_id")
-        user_id = getattr(new_review, "user_id")
-        text = getattr(new_review, "text")
-        self.assertIsInstance(place_id, str)
-        self.assertIsInstance(user_id, str)
-        self.assertIsInstance(text, str)
-
     def test_attr_base(self):
         """ Test attribut BaseModel """
         self.assertIsNotNone(self.rev_1.id)
@@ -49,6 +38,9 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.rev_1.text, "Nice")
         self.assertEqual(self.rev_1.place_id, self.place.id)
         self.assertEqual(self.rev_1.user_id, self.user.id)
+        self.assertIsInstance(self.rev_1.place_id, str)
+        self.assertIsInstance(self.rev_1.user_id, str)
+        self.assertIsInstance(self.rev_1.text, str)
 
     def test_no_arg(self):
         """ Test Review class with no attribut """
