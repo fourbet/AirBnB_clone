@@ -4,6 +4,7 @@
 from uuid import uuid4
 from datetime import datetime as dt
 import models
+fmt = "%Y-%m-%dT%H:%M:%S.%f"
 
 
 class BaseModel():
@@ -25,10 +26,12 @@ class BaseModel():
 
         if kwargs:
             for k, v in kwargs.items():
-                if k in ["created_at", "updated_at"] and type(k) is str:
-                    setattr(self, k, dt.strptime(v, '%Y-%m-%dT%H:%M:%S.%f'))
-                elif k != '__class__':
-                    setattr(self, k, str(v))
+                if k != '__class__':
+                    setattr(self, k, v)
+                if hasattr(self, "created_at") and type(self.created_at) is str:
+                    self.created_at = dt.strptime(kwargs["created_at"], fmt)
+                if hasattr(self, "updated_at") and type(self.updated_at) is str:
+                    self.updated_at = self.created_at
         else:
             self.id = str(uuid4())
             self.created_at = dt.now()
