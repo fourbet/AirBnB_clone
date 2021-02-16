@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Unit tests Review Class """
-from models.base_model import BaseModel
 from models.review import Review
 from models.user import User
 from models.place import Place
@@ -38,9 +37,16 @@ class TestReview(unittest.TestCase):
         self.assertEqual(self.rev_1.text, "Nice")
         self.assertEqual(self.rev_1.place_id, self.place.id)
         self.assertEqual(self.rev_1.user_id, self.user.id)
-        self.assertIsInstance(self.rev_1.place_id, str)
-        self.assertIsInstance(self.rev_1.user_id, str)
-        self.assertIsInstance(self.rev_1.text, str)
+
+    def test_Review_attributes(self):
+        """Test that Review class has place_id, user_id and text
+            attributes."""
+        place_id = getattr(self.rev_1, "place_id")
+        user_id = getattr(self.rev_1, "user_id")
+        text = getattr(self.rev_1, "text")
+        self.assertIsInstance(place_id, str)
+        self.assertIsInstance(user_id, str)
+        self.assertIsInstance(text, str)
 
     def test_no_arg(self):
         """ Test Review class with no attribut """
