@@ -58,9 +58,5 @@ class BaseModel():
         my_dict["__class__"] = self.__class__.__name__
         return my_dict
 
-    def test_07_str_save(self):
-        """ Test methods str and save """
-        b = BaseModel()
-        string = "[BaseModel] ({}) {}".format(b.id, b.__dict__)
-        self.assertEqual(string, b.__str__())
-        b.save()
+if __name__ == '__main__':
+    unittest.main()
