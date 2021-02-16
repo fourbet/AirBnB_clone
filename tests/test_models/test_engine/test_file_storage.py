@@ -85,6 +85,9 @@ class FileStorage_Test(unittest.TestCase):
         fs.reload()
         my_dict = storage.all()
         self.assertDictEqual(my_dict["BaseModel." + b.id].to_dict(), b.to_dict())
+        if os.path.isfile('file2.json'):
+            b.save()
+
 
 if __name__ == '__main__':
     unittest.main()
