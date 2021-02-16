@@ -21,10 +21,13 @@ class TestReview(unittest.TestCase):
         self.rev_1.text = "Nice"
         self.rev_2 = Place()
 
-    def test_Review_inheritance(self):
-        """tests Inheritance from BaseModel"""
+    def test_Review_attributes(self):
+        """Test that Review class has place_id,
+        user_id and text attributes."""
         new_review = Review()
-        self.assertIsInstance(new_review, BaseModel)
+        self.assertTrue("place_id" in new_review.__dir__())
+        self.assertTrue("user_id" in new_review.__dir__())
+        self.assertTrue("text" in new_review.__dir__())
 
     def test_attr_base(self):
         """ Test attribut BaseModel """
