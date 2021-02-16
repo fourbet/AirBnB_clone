@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ Unit tests Review Class """
+from models.base_model import BaseModel
 from models.review import Review
 from models.user import User
 from models.place import Place
 import unittest
-from datetime import datetime
+from datetime import datetime as dt
 
 
 class TestReview(unittest.TestCase):
@@ -20,6 +21,11 @@ class TestReview(unittest.TestCase):
         self.rev_1.text = "Nice"
         self.rev_2 = Place()
 
+    def test_Review_inheritance(self):
+        """tests Inheritance from BaseModel"""
+        new_review = Review()
+        self.assertIsInstance(new_review, BaseModel)
+
     def test_attr_base(self):
         """ Test attribut BaseModel """
         self.assertIsNotNone(self.rev_1.id)
@@ -29,8 +35,8 @@ class TestReview(unittest.TestCase):
     def test_type_attr_base(self):
         """ Test type attribut BaseModel """
         self.assertEqual(type(self.rev_1.id), str)
-        self.assertEqual(type(self.rev_1.created_at), datetime)
-        self.assertEqual(type(self.rev_1.updated_at), datetime)
+        self.assertEqual(type(self.rev_1.created_at), dt)
+        self.assertEqual(type(self.rev_1.updated_at), dt)
 
     def test_attr(self):
         """ Test attribut Review class """
