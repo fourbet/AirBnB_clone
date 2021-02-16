@@ -75,6 +75,11 @@ class FileStorage_Test(unittest.TestCase):
         self.assertTrue(fs.all()[key])
         fs.all()
 
+    def test_05_attributs(self):
+        """Test attributs"""
+        fs = FileStorage()
+        fs.__file_path = "file2.json"
+
 
 if __name__ == '__main__':
     unittest.main()
