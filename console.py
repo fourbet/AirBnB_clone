@@ -6,6 +6,7 @@ Entry point of the command interpreter.
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
@@ -53,9 +54,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, cls):
         """Retrieve the number of instances of a class"""
-        cls = cls.split(' ')
-        if not cls:
-            return(print(self.errors["ClassMissing"]))
         if cls and cls not in self.classes:
             return(print(self.errors["ClassUnknown"]))
         count = 0

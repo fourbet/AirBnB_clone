@@ -4,6 +4,7 @@
 from uuid import uuid4
 from datetime import datetime as dt
 import models
+fmt = "%Y-%m-%dT%H:%M:%S.%f"
 
 
 class BaseModel():
@@ -32,13 +33,13 @@ class BaseModel():
         else:
             self.id = str(uuid4())
             self.created_at = dt.now()
-            self.updated_at = dt.now()
+            self.updated_at = self.created_at
             models.storage.new(self)
 
     def __str__(self):
         """ Print """
-        return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+        return "[{:s}] ({:s}) {}".format(
+            self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """ Updates the public instance attribute updated_at
@@ -54,5 +55,5 @@ class BaseModel():
         my_dict = dict(self.__dict__)
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
-        my_dict["__class__"] = type(self).__name__
+        my_dict["__class__"] = self.__class__.__name__
         return my_dict
