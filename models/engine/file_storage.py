@@ -19,7 +19,7 @@ from models.review import Review
 class FileStorage():
     """ FileStorage class
 
-    Private calss attributes:
+    Private class attributes:
         __file_path (str): path to the JSON file
         __objects (dict): store all objects by <class name>.id
     """
@@ -49,3 +49,5 @@ class FileStorage():
                 for k, v in my_dict.items():
                     cls = v["__class__"]
                     self.new(eval(cls)(**v))
+        else:
+            return
