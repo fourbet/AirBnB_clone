@@ -73,6 +73,7 @@ class FileStorage_Test(unittest.TestCase):
         fs.save()
         fs.reload()
         self.assertTrue(fs.all()[key])
+        fs.all()
 
 
 if __name__ == '__main__':
