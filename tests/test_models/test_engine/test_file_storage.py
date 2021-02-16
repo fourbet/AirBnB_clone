@@ -81,12 +81,6 @@ class FileStorage_Test(unittest.TestCase):
         fs = FileStorage()
         fs.__file_path = "file2.json"
 
-    def test_attr_all(self):
-        """Tests all function should return dict"""
-        s1 = FileStorage()
-        d1 = s1.all()
-        self.assertEqual(type(d1), dict)
-        self.assertIs(d1, s1._FileStorage__objects)
 
     def test_save_reload(self):
         """Tests the save and reload functions"""
