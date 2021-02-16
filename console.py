@@ -54,9 +54,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, cls):
         """Retrieve the number of instances of a class"""
-        cls = cls.split(' ')
-        if not cls:
-            return(print(self.errors["ClassMissing"]))
         if cls and cls not in self.classes:
             return(print(self.errors["ClassUnknown"]))
         count = 0
