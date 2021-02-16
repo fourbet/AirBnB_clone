@@ -62,4 +62,4 @@ class BaseModel():
         """ Test methods str and save """
         b = BaseModel()
         string = "[BaseModel] ({}) {}".format(b.id, b.__dict__)
-        self.assertEqual(string, str(b))
+        self.assertEqual(string, b.__str__())
