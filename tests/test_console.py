@@ -35,7 +35,7 @@ class Console_Test(unittest.TestCase):
         """Test EOF"""
         with patch("sys.stdout", new=StringIO()) as f:
             self.assertTrue(HBNBCommand().onecmd("EOF"))
-"""
+
     def test_02_show(self):
         b = BaseModel()
         b_id = b.id
@@ -78,6 +78,58 @@ class Console_Test(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             HBNBCommand().onecmd("Place.show(" + p_id + ")")
             self.assertIn('Place', f.getvalue())
-"""
+
+    def test_04_destroy(self):
+        """Test to validate destroy works."""
+        b = BaseModel()
+        b_id = b.id
+        with patch("sys.stdout", new=StringIO()) as o:
+            HBNBCommand().onecmd("BaseModel.destroy(" + b_id + ")")
+            HBNBCommand().onecmd("BaseModel.show(" + b_id + ")")
+            self.assertNotIn('BaseModel', o.getvalue())
+
+        s = State()
+        s_id = s.id
+        with patch("sys.stdout", new=StringIO()) as o:
+            HBNBCommand().onecmd("State.destroy(" + s_id + ")")
+            HBNBCommand().onecmd("State.show(" + s_id + ")")
+            self.assertNotIn('State', o.getvalue())
+
+        u = User()
+        u_id = u.id
+        with patch("sys.stdout", new=StringIO()) as o:
+            HBNBCommand().onecmd("User.destroy(" + u_id + ")")
+            HBNBCommand().onecmd("User.show(" + s_id + ")")
+            self.assertNotIn('User', o.getvalue())
+
+        a = Amenity()
+        a_id = a.id
+        with patch("sys.stdout", new=StringIO()) as o:
+            HBNBCommand().onecmd("Amenity.destroy(" + a_id + ")")
+            HBNBCommand().onecmd("Amenity.show(" + a_id + ")")
+            self.assertNotIn('Amenity', o.getvalue())
+
+        r = Review()
+        r_id = r.id
+        with patch("sys.stdout", new=StringIO()) as o:
+            HBNBCommand().onecmd("Review.destroy(" + r_id + ")")
+            HBNBCommand().onecmd("Review.show(" + r_id + ")")
+            self.assertNotIn('Review', o.getvalue())
+
+        c = City()
+        c_id = c.id
+        with patch("sys.stdout", new=StringIO()) as o:
+            HBNBCommand().onecmd("City.destroy(" + c_id + ")")
+            HBNBCommand().onecmd("City.show(" + c_id + ")")
+            self.assertNotIn('City', o.getvalue())
+
+        p = Place()
+        p_id = p.id
+        with patch("sys.stdout", new=StringIO()) as o:
+            HBNBCommand().onecmd("Place.destroy(" + p_id + ")")
+            HBNBCommand().onecmd("Place.show(" + p_id + ")")
+            self.assertNotIn('Place', o.getvalue())
+
+
 if __name__ == '__main__':
     unittest.main()
