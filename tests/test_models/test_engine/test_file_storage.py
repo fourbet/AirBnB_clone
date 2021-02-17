@@ -56,6 +56,10 @@ class FileStorage_Test(unittest.TestCase):
         self.assertTrue(hasattr(b, "id"))
         self.assertEqual(type(b.id), str)
 
+        fs = FileStorage()
+        with self.assertRaises(AttributeError):
+            fs.new(1)
+
     def test_03_save(self):
         """Tests the save method"""
         fs = FileStorage()
