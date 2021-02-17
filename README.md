@@ -6,14 +6,13 @@ This is a project of Holberton School and we had 7 days to do it.
 
 ## Step 1: The Console
 
-<br />
 * Create your data model
 * Manage (create, update, destroy, etc) objects via a console / command interpreter
 * Store and persist objects to a file (JSON file)
 
 The first step is to manipulate a powerful storage system. This storage engine will give an abstraction between objects and how they are stored and persisted.
 
-![AirBnB_Clone](http://huy75.github.com/huy75.github.io/img/airbnb-clone.png)
+![AirBnB_Clone](https://github.com/huy75/huy75.github.io/blob/main/img/airbnb-clone.png)
 
 It consists of **writing a command interpreter to manage AirBnB objects**.
 It specifies classes for **User, City, State, Amenity, Place** and **Review** that inherits from the **BaseModel** class.
