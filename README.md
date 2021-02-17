@@ -13,7 +13,7 @@ This is a project of Holberton School and we had 7 days to do it.
 
 The first step is to manipulate a powerful storage system. This storage engine will give an abstraction between objects and how they are stored and persisted.
 
-![AirBnB_Clone](huy75.github.com/huy75.github.io/img/airbnb-clone.png)
+![AirBnB_Clone](http://huy75.github.com/huy75.github.io/img/airbnb-clone.png)
 
 It consists of **writing a command interpreter to manage AirBnB objects**.
 It specifies classes for **User, City, State, Amenity, Place** and **Review** that inherits from the **BaseModel** class.
