@@ -55,7 +55,12 @@ Then it will prints a prompt and waits for input from the user:
 |```destroy <class> <id>``` | Deletes an instance based on its ```<class>``` and ```<id>```|
 |```all``` | Prints all string representation of all instances of all classes|
 |```all <class>``` | Prints all string representation of all instances of the ```<class>```|
-|```update <class> <id> <attribute name> <attribute value>``` | Creates or updates the attribute of an instance based on its ```<class>``` and ```<id>``` |
+|```update <class> <id> <attribute name> <attribute value>``` | Creates or updates the attribute of an instance based on its ```<class>``` and ```<id>``` |```<class name>.all()``` | Retrieve all instances of a class|
+|```<class name>.count()```| Retrieve the number of instances of a class |
+|```<class name>.show(<id>)``` | Retrieve an instance based on its id|
+|```<class name>.destroy(<id>)``` | Destroy an instance based on his id|
+|```<class name>.update(<id>, <attribute name>, <attribute value>)```| Update an instance based on its id|
+|```<class name>.update(<id>, <dictionary representation>)```| Update an instance based on its id with a dictionary|
 
 ### Non-interactive mode:
 The same commands can be used to run the console in non-interactive mode.
