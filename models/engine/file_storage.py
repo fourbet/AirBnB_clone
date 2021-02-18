@@ -41,7 +41,7 @@ class FileStorage():
         my_dict = {k: v.to_dict() for k, v in self.__objects.items()}
 
         with open(self.__file_path, mode='w+', encoding='utf-8') as f:
-            json.dump(my_dict, f)
+            json.dump(my_dict, f, sort_keys=True, indent=4)
 
     def reload(self):
         """ Deserializes the JSON file to __objects """
@@ -51,5 +51,3 @@ class FileStorage():
                 for k, v in my_dict.items():
                     cls = v["__class__"]
                     self.new(eval(cls)(**v))
-        else:
-            return
