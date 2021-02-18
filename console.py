@@ -133,7 +133,6 @@ class HBNBCommand(cmd.Cmd):
         elif len(cmd) == 3:
             print(self.errors["ValueMissing"])
         else:
-            k = cmd[0] + '.' + cmd[1]
             val = cmd[3]
             try:
                 if val.isdigit():
