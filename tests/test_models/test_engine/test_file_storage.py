@@ -99,18 +99,24 @@ class FileStorage_Test(unittest.TestCase):
 
     def test_save(self):
         """ Tests save method with base model """
-        filename = "file.json"
-        m1 = BaseModel()
-        key = m1.__class__.__name__+'.'+m1.id
-        self.assertFalse(os.path.exists(filename))
-        storage.new(m1)
+        c_date = '2017-09-28T21:05:54.119427'
+        u_date = '2017-09-28T21:05:54.119572'
+        id_val = "b_save"
+
+        b = BaseModel(id=id_val, created_at=c_date, updated_at=u_date,)
+        storage.new(b)
         storage.save()
-        self.assertTrue(os.path.exists(filename))
-        with open(filename) as f:
-            myobj = json.load(f)
-            self.assertEqual(m1.id, myobj[key]["id"])
-            self.assertEqual(m1.__class__.__name__,
-                             myobj[key]["__class__"])
+
+        objects_dict = storage.all()
+        keys = objects_dict.keys()
+        b_key = "BaseModel." + b.id
+        b_dict = b.to_dict()
+
+        with open("file.json", "r") as file:
+            json_text = file.read()
+        json_dict = eval(json_text)
+        self.assertTrue(b_key in json_dict.keys())
+        self.assertEqual(json_dict[b_key], b_dict)
 
 
 if __name__ == '__main__':
