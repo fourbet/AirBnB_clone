@@ -6,6 +6,7 @@ Unittest for FileStorage class.
 
 import unittest
 import os
+import json
 from models import storage
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
@@ -16,7 +17,8 @@ class FileStorage_Test(unittest.TestCase):
 
     def setUp(self):
         """Set up"""
-        pass
+        if os.path.exists("file.json"):
+            os.remove("file.json")
 
     def tearDown(self):
         """Tear down"""
@@ -94,6 +96,21 @@ class FileStorage_Test(unittest.TestCase):
         os.remove("file.json")
         if os.path.isfile('file.jsonSAVE'):
             os.rename("file.jsonSAVE", "file.json")
+
+    def test_save(self):
+        """ Tests save method with base model """
+        filename = "file.json"
+        m1 = BaseModel()
+        key = m1.__class__.__name__+'.'+m1.id
+        self.assertFalse(os.path.exists(filename))
+        storage.new(m1)
+        storage.save()
+        self.assertTrue(os.path.exists(filename))
+        with open(filename) as f:
+            myobj = json.load(f)
+            self.assertEqual(m1.id, myobj[key]["id"])
+            self.assertEqual(m1.__class__.__name__,
+                             myobj[key]["__class__"])
 
 
 if __name__ == '__main__':
