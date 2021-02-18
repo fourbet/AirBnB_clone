@@ -51,3 +51,5 @@ class FileStorage():
                 for k, v in my_dict.items():
                     cls = v["__class__"]
                     self.new(eval(cls)(**v))
+        else:
+            pass
